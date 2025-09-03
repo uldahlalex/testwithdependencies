@@ -15,4 +15,30 @@ public class PetService(MyDbContext dbContext)
         await dbContext.SaveChangesAsync();
         return pet;
     }
+    
+    //Delete
+    public async Task<Pet> DeletePet(string id)
+    {
+        var pet = dbContext.Pets.FirstOrDefault(p => p.Id == id) ??
+            throw new KeyNotFoundException("Pet was not found");
+        dbContext.Pets.Remove(pet);
+        await dbContext.SaveChangesAsync();
+        return pet;
+    }
+    
+    
+    //Update
+    public async Task<Pet> UpdatePet(CreatePetRequestDto dto, string id)
+    {
+        //Find the pet in the DB
+        var pet = dbContext.Pets.FirstOrDefault(p => p.Id == id) ??
+                  throw new KeyNotFoundException("Pet was not found");        
+        //Overwrite the properties you wish to update
+        pet.Age = dto.Age;
+        pet.Name = dto.Name;
+
+        //Save the changes and return the pet
+        dbContext.SaveChangesAsync();
+        return pet;
+    }
 }
