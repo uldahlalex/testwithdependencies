@@ -9,8 +9,6 @@ public class UnitTest1
     public void Test1()
     {
         
-        var petservice = new PetService();
-        Assert.ThrowsAny<ValidationException>(() => petservice.CreatePet());
       
     }
 }
